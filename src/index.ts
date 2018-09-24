@@ -1,5 +1,3 @@
-declare var chrome: any;
-
 console.log("Hello!");
 
 console.log(chrome);
@@ -23,11 +21,11 @@ console.log(chrome.tabs);
 
 const btnClick: HTMLElement = document.getElementById("btnClick")!;
 
-btnClick.addEventListener("click", function() {
+btnClick.addEventListener("click", () => {
   console.log("Button was clicked");
   console.log(chrome);
   console.log(chrome.tabs);
-  chrome.tabs.getSelected(null, function(tab: { id: number }) {
-    chrome.tabs.remove(tab.id);
+  chrome.tabs.getSelected(tab => {
+    chrome.tabs.remove(tab.id!);
   });
 });
