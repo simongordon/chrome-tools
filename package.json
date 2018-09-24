@@ -8,6 +8,7 @@
     "build-pug": "pug src --out target",
     "build": "yarn run build-ts && yarn run build-pug",
     "watch-ts": "tsc -w",
+    "watch-pug": "pug src --out target -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
