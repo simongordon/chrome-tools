@@ -9,6 +9,7 @@
       "run_at": "document_end"
     }
   ],
+  "permissions": ["tabs"],
   "browser_action": {
     "default_icon": "undup-48.png",
     "default_popup": "target/popup.html"

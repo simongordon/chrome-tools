@@ -1,31 +1,21 @@
-console.log("Hello!");
-
-console.log(chrome);
-console.log(chrome.tabs);
-
-// // Content script
-// chrome.runtime.sendMessage({ closeThis: true });
-
-// // Background script
-// chrome.runtime.onMessage.addListener(function(
-//   message: { closeThis: boolean },
-//   sender: {
-//     tab: {
-//       id: number;
-//     };
-//   },
-//   sendResponse: {}
-// ) {
-//   if (message.closeThis) chrome.tabs.remove(sender.tab.id);
-// });
+console.log("Extension loaded");
 
 const btnClick: HTMLElement = document.getElementById("btnClick")!;
 
 btnClick.addEventListener("click", () => {
   console.log("Button was clicked");
-  console.log(chrome);
-  console.log(chrome.tabs);
-  chrome.tabs.getSelected(tab => {
-    chrome.tabs.remove(tab.id!);
+  chrome.windows.getCurrent(({ id }) => {
+    chrome.tabs.query({ windowId: id }, tabs => {
+      const alreadyOpen: string[] = [];
+      for (let i = 0; i < tabs.length; i++) {
+        const curTab = tabs[i];
+        const curUrl = curTab.url!;
+        if (alreadyOpen.indexOf(curUrl) !== -1) {
+          chrome.tabs.remove(curTab.id!);
+        } else {
+          alreadyOpen.push(curUrl);
+        }
+      }
+    });
   });
 });
