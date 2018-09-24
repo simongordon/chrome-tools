@@ -1,0 +1,20 @@
+{
+  "manifest_version": 2,
+  "name": "undup",
+  "version": "0.0.1",
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*", "file://*/*"],
+      "js": ["target/index.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "browser_action": {
+    "default_icon": "undup-48.png",
+    "default_popup": "target/popup.html"
+  },
+  "icons": {
+    "128": "undup-128.png",
+    "48": "undup-48.png"
+  }
+}
