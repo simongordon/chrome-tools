@@ -1,7 +1,5 @@
 console.log("Extension loaded");
 
-const btnClick: HTMLElement = document.getElementById("btnClick")!;
-
 const closeDuplicates = () =>
   new Promise(resolve => {
     chrome.windows.getCurrent(({ id }) => {
@@ -45,22 +43,25 @@ const sortTabs = () =>
     });
   });
 
-btnClick.addEventListener("click", () => {
-  console.log("Button was clicked");
-  closeDuplicates();
-});
+window.addEventListener("load", () => {
+  console.log("loaded");
 
-const btnSort: HTMLElement = document.getElementById("btnSort")!;
+  const btnClick = document.getElementById("btnClick")!;
+  btnClick.addEventListener("click", () => {
+    console.log("btnClick was clicked");
+    closeDuplicates();
+  });
 
-btnSort.addEventListener("click", () => {
-  console.log("Button was clicked");
-  sortTabs();
-});
+  const btnSort = document.getElementById("btnSort")!;
+  btnSort.addEventListener("click", () => {
+    console.log("btnSort was clicked");
+    sortTabs();
+  });
 
-const btnCleanup: HTMLElement = document.getElementById("btnCleanup")!;
-
-btnCleanup.addEventListener("click", async () => {
-  console.log("Button was clicked");
-  await closeDuplicates();
-  await sortTabs();
+  const btnCleanup = document.getElementById("btnCleanup")!;
+  btnCleanup.addEventListener("click", async () => {
+    console.log("btnCleanup was clicked");
+    await closeDuplicates();
+    await sortTabs();
+  });
 });
