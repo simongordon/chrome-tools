@@ -56,3 +56,11 @@ btnSort.addEventListener("click", () => {
   console.log("Button was clicked");
   sortTabs();
 });
+
+const btnCleanup: HTMLElement = document.getElementById("btnCleanup")!;
+
+btnCleanup.addEventListener("click", async () => {
+  console.log("Button was clicked");
+  await closeDuplicates();
+  await sortTabs();
+});
