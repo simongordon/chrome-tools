@@ -1,17 +1,17 @@
 {
   "manifest_version": 2,
-  "name": "undup",
+  "name": "chrome-tools",
   "version": "0.0.1",
   "background": {
     "scripts": ["target/index.js"]
   },
   "permissions": ["tabs"],
   "browser_action": {
-    "default_icon": "undup-48.png",
+    "default_icon": "ct-48.png",
     "default_popup": "target/popup.html"
   },
   "icons": {
-    "128": "undup-128.png",
-    "48": "undup-48.png"
+    "128": "ct-128.png",
+    "48": "ct-48.png"
   }
 }

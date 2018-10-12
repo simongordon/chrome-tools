@@ -1,5 +1,5 @@
 {
-  "name": "undup",
+  "name": "chrome-tools",
   "version": "1.0.0",
   "description": "Remove duplicate chrome tabs",
   "main": "index.js",
