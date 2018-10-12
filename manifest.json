@@ -2,13 +2,9 @@
   "manifest_version": 2,
   "name": "undup",
   "version": "0.0.1",
-  "content_scripts": [
-    {
-      "matches": ["http://*/*", "https://*/*", "file://*/*"],
-      "js": ["target/index.js"],
-      "run_at": "document_end"
-    }
-  ],
+  "background": {
+    "scripts": ["target/index.js"]
+  },
   "permissions": ["tabs"],
   "browser_action": {
     "default_icon": "undup-48.png",
