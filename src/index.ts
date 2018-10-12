@@ -17,17 +17,28 @@ const closeDuplicates = () =>
     });
   });
 
-const closeSearches = () =>
+const getHostname = (url: string) => {
+  // TODO: Something less hacky
+  const a = document.createElement("a");
+  a.href = url;
+  return a.hostname;
+};
+
+const closeWebsite = () =>
   new Promise(resolve => {
-    chrome.tabs.query({ currentWindow: true }, tabs => {
-      for (let i = 0; i < tabs.length; i++) {
-        const curTab = tabs[i];
-        const curUrl = curTab.url!;
-        if (curUrl.indexOf("https://www.google.com.au/search") === 0) {
-          chrome.tabs.remove(curTab.id!);
+    chrome.tabs.query({ currentWindow: true, active: true }, tabs => {
+      const [tab] = tabs;
+      const hostname = getHostname(tab.url || "");
+      chrome.tabs.query({ currentWindow: true }, tabs => {
+        for (let i = 0; i < tabs.length; i++) {
+          const curTab = tabs[i];
+          const curUrl = curTab.url!;
+          if (getHostname(curUrl) === hostname) {
+            chrome.tabs.remove(curTab.id!);
+          }
         }
-      }
-      resolve();
+        resolve();
+      });
     });
   });
 
@@ -84,9 +95,9 @@ window.addEventListener("load", () => {
     await sortTabsByUrl();
   });
 
-  const btnCloseSearch = document.getElementById("btnCloseSearch")!;
-  btnCloseSearch.addEventListener("click", async () => {
-    console.log("btnCloseSearch was clicked");
-    closeSearches();
+  const btnCloseWebsite = document.getElementById("btnCloseWebsite")!;
+  btnCloseWebsite.addEventListener("click", async () => {
+    console.log("btnCloseWebsite was clicked");
+    closeWebsite();
   });
 });
