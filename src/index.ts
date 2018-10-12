@@ -17,19 +17,12 @@ const closeDuplicates = () =>
     });
   });
 
-const sortTabs = () =>
+const sortTabs = (
+  compareFn: ((a: chrome.tabs.Tab, b: chrome.tabs.Tab) => number)
+) =>
   new Promise(resolve => {
     chrome.tabs.query({ currentWindow: true }, tabs => {
-      const sorted = tabs.sort(({ url: urlA = "" }, { url: urlB = "" }) => {
-        if (urlA == urlB) {
-          return 0;
-        }
-        if (urlA < urlB) {
-          return -1;
-        } else {
-          return 1;
-        }
-      });
+      const sorted = tabs.sort(compareFn);
 
       for (let i = 0; i < sorted.length; i++) {
         const element = sorted[i];
@@ -41,6 +34,14 @@ const sortTabs = () =>
     });
   });
 
+const compareStr = (
+  str1: string | undefined = "",
+  str2: string | undefined = ""
+) => (str1 === str2 ? 0 : str1 < str2 ? -1 : 1);
+
+const sortTabsByUrl = () => sortTabs((a, b) => compareStr(a.url, b.url));
+const sortTabsByTitle = () => sortTabs((a, b) => compareStr(a.title, b.title));
+
 window.addEventListener("load", () => {
   console.log("Extension loaded");
 
@@ -50,16 +51,22 @@ window.addEventListener("load", () => {
     closeDuplicates();
   });
 
-  const btnSort = document.getElementById("btnSort")!;
-  btnSort.addEventListener("click", () => {
-    console.log("btnSort was clicked");
-    sortTabs();
+  const btnSortURL = document.getElementById("btnSortURL")!;
+  btnSortURL.addEventListener("click", () => {
+    console.log("btnSortURL was clicked");
+    sortTabsByUrl();
+  });
+
+  const btnSortTitle = document.getElementById("btnSortTitle")!;
+  btnSortTitle.addEventListener("click", () => {
+    console.log("btnSortTitle was clicked");
+    sortTabsByTitle();
   });
 
   const btnCleanup = document.getElementById("btnCleanup")!;
   btnCleanup.addEventListener("click", async () => {
     console.log("btnCleanup was clicked");
     await closeDuplicates();
-    await sortTabs();
+    await sortTabsByUrl();
   });
 });
