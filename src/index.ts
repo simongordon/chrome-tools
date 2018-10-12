@@ -17,6 +17,20 @@ const closeDuplicates = () =>
     });
   });
 
+const closeSearches = () =>
+  new Promise(resolve => {
+    chrome.tabs.query({ currentWindow: true }, tabs => {
+      for (let i = 0; i < tabs.length; i++) {
+        const curTab = tabs[i];
+        const curUrl = curTab.url!;
+        if (curUrl.indexOf("https://www.google.com.au/search") === 0) {
+          chrome.tabs.remove(curTab.id!);
+        }
+      }
+      resolve();
+    });
+  });
+
 const sortTabs = (
   compareFn: ((a: chrome.tabs.Tab, b: chrome.tabs.Tab) => number)
 ) =>
@@ -68,5 +82,11 @@ window.addEventListener("load", () => {
     console.log("btnCleanup was clicked");
     await closeDuplicates();
     await sortTabsByUrl();
+  });
+
+  const btnCloseSearch = document.getElementById("btnCloseSearch")!;
+  btnCloseSearch.addEventListener("click", async () => {
+    console.log("btnCloseSearch was clicked");
+    closeSearches();
   });
 });
