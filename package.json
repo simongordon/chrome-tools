@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build-ts": "tsc",
-    "build-pug": "pug src --out target",
+    "build-pug": "pug src --out extension/target",
     "build": "yarn run build-ts && yarn run build-pug",
     "watch-ts": "tsc -w",
-    "watch-pug": "pug src --out target -w",
+    "watch-pug": "pug src --out extension/target -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
