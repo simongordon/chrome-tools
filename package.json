@@ -7,7 +7,7 @@
     "build-ts": "tsc",
     "build-pug": "pug src --out extension/target",
     "build-css": "sass src/index.scss extension/target/index.css",
-    "build": "yarn run build-ts && yarn run build-pug",
+    "build": "yarn run build-ts && yarn run build-pug && yarn run build-css",
     "watch-ts": "tsc -w",
     "watch-pug": "pug src --out extension/target -w",
     "watch-css": "sass src/index.scss extension/target/index.css --watch",
