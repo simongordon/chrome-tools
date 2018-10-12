@@ -1,28 +1,26 @@
-console.log("Extension loaded");
+console.log("Extension loading");
 
 const closeDuplicates = () =>
   new Promise(resolve => {
-    chrome.windows.getCurrent(({ id }) => {
-      chrome.tabs.query({ windowId: id }, tabs => {
-        const alreadyOpen: string[] = [];
-        for (let i = 0; i < tabs.length; i++) {
-          const curTab = tabs[i];
-          const curUrl = curTab.url!;
-          if (alreadyOpen.indexOf(curUrl) !== -1) {
-            chrome.tabs.remove(curTab.id!);
-          } else {
-            alreadyOpen.push(curUrl);
-          }
+    chrome.tabs.query({ currentWindow: true }, tabs => {
+      const alreadyOpen: string[] = [];
+      for (let i = 0; i < tabs.length; i++) {
+        const curTab = tabs[i];
+        const curUrl = curTab.url!;
+        if (alreadyOpen.indexOf(curUrl) !== -1) {
+          chrome.tabs.remove(curTab.id!);
+        } else {
+          alreadyOpen.push(curUrl);
         }
-        resolve();
-      });
+      }
+      resolve();
     });
   });
 
 const sortTabs = () =>
   new Promise(resolve => {
-    chrome.tabs.query({ currentWindow: true }, function(tabArray) {
-      const sorted = tabArray.sort(({ url: urlA = "" }, { url: urlB = "" }) => {
+    chrome.tabs.query({ currentWindow: true }, tabs => {
+      const sorted = tabs.sort(({ url: urlA = "" }, { url: urlB = "" }) => {
         if (urlA == urlB) {
           return 0;
         }
@@ -32,7 +30,7 @@ const sortTabs = () =>
           return 1;
         }
       });
-      console.log(sorted);
+
       for (let i = 0; i < sorted.length; i++) {
         const element = sorted[i];
         chrome.tabs.move(element.id || 0, {
@@ -44,7 +42,7 @@ const sortTabs = () =>
   });
 
 window.addEventListener("load", () => {
-  console.log("loaded");
+  console.log("Extension loaded");
 
   const btnClick = document.getElementById("btnClick")!;
   btnClick.addEventListener("click", () => {
