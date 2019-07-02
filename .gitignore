@@ -5,3 +5,4 @@ build/
 target/
 dist/
 extension/target/
+.cache/
