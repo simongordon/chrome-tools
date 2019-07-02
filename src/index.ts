@@ -24,6 +24,12 @@ const getHostname = (url: string) => {
   return a.hostname;
 };
 
+const reverseHostname = (url: string) => {
+  const hostname = getHostname(url);
+  const reversed = hostname.split('').reverse().join('');
+  return url.replace(hostname, reversed);
+}
+
 const closeWebsite = () =>
   new Promise(resolve => {
     chrome.tabs.query({ currentWindow: true, active: true }, tabs => {
@@ -67,6 +73,8 @@ const compareStr = (
 const sortTabsByUrl = () => sortTabs((a, b) => compareStr(a.url, b.url));
 const sortTabsByTitle = () => sortTabs((a, b) => compareStr(a.title, b.title));
 
+const sortTabsByUrl2 = () => sortTabs((a, b) => compareStr(reverseHostname(a.url || ''), reverseHostname(b.url || '')));
+
 window.addEventListener("load", () => {
   console.log("Extension loaded");
 
@@ -81,6 +89,11 @@ window.addEventListener("load", () => {
     console.log("btnSortURL was clicked");
     sortTabsByUrl();
   });
+  const btnSortURL2 = document.getElementById("btnSortURL2")!;
+  btnSortURL2.addEventListener("click", () => {
+    console.log("btnSortURL2 was clicked");
+    sortTabsByUrl2();
+  });
 
   const btnSortTitle = document.getElementById("btnSortTitle")!;
   btnSortTitle.addEventListener("click", () => {
@@ -93,6 +106,13 @@ window.addEventListener("load", () => {
     console.log("btnCleanup was clicked");
     await closeDuplicates();
     await sortTabsByUrl();
+  });
+
+  const btnCleanup2 = document.getElementById("btnCleanup2")!;
+  btnCleanup2.addEventListener("click", async () => {
+    console.log("btnCleanup2 was clicked");
+    await closeDuplicates();
+    await sortTabsByUrl2();
   });
 
   const btnCloseWebsite = document.getElementById("btnCloseWebsite")!;
