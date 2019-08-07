@@ -30,6 +30,12 @@ const reverseHostname = (url: string) => {
   return url.replace(hostname, reversed);
 }
 
+const reversePeriods = (url: string) => {
+  const hostname = getHostname(url);
+  const reversed = hostname.split('.').reverse().join('.');
+  return url.replace(hostname, reversed);
+}
+
 const closeWebsite = () =>
   new Promise(resolve => {
     chrome.tabs.query({ currentWindow: true, active: true }, tabs => {
@@ -47,6 +53,7 @@ const closeWebsite = () =>
       });
     });
   });
+
 
 const sortTabs = (
   compareFn: ((a: chrome.tabs.Tab, b: chrome.tabs.Tab) => number)
@@ -73,7 +80,7 @@ const compareStr = (
 const sortTabsByUrl = () => sortTabs((a, b) => compareStr(a.url, b.url));
 const sortTabsByTitle = () => sortTabs((a, b) => compareStr(a.title, b.title));
 
-const sortTabsByUrl2 = () => sortTabs((a, b) => compareStr(reverseHostname(a.url || ''), reverseHostname(b.url || '')));
+const sortTabsByUrl2 = () => sortTabs((a, b) => compareStr(reversePeriods(a.url || ''), reversePeriods(b.url || '')));
 
 window.addEventListener("load", () => {
   console.log("Extension loaded");
