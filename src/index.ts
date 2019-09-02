@@ -42,7 +42,7 @@ const reversePeriods = (url: string) => {
   return url.replace(hostname, reversed);
 };
 
-const closeWebsite = () =>
+const closeWebsite = (keepCurrentOpen: boolean = false) =>
   new Promise(resolve => {
     chrome.tabs.query({ currentWindow: true, active: true }, tabs => {
       const [tab] = tabs;
@@ -51,7 +51,10 @@ const closeWebsite = () =>
         for (let i = 0; i < tabs.length; i++) {
           const curTab = tabs[i];
           const curUrl = curTab.url!;
-          if (getHostname(curUrl) === hostname) {
+          if (
+            getHostname(curUrl) === hostname &&
+            (keepCurrentOpen ? !curTab.active : true)
+          ) {
             chrome.tabs.remove(curTab.id!);
           }
         }
@@ -134,5 +137,11 @@ window.addEventListener("load", () => {
   btnCloseWebsite.addEventListener("click", async () => {
     console.log("btnCloseWebsite was clicked");
     closeWebsite();
+  });
+
+  const btnCloseWebsite2 = document.getElementById("btnCloseWebsite2")!;
+  btnCloseWebsite2.addEventListener("click", async () => {
+    console.log("btnCloseWebsite2 was clicked");
+    closeWebsite(true);
   });
 });
