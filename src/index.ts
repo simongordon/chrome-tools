@@ -1,15 +1,24 @@
 console.log("Extension loading");
 
-const closeDuplicates = () =>
+const closeDuplicates = (groupHashes: boolean = false) =>
   new Promise(resolve => {
     chrome.tabs.query({ currentWindow: true }, tabs => {
       const alreadyOpen: string[] = [];
       for (let i = 0; i < tabs.length; i++) {
         const curTab = tabs[i];
-        const curUrl = curTab.url!;
+        let curUrl = curTab.url!;
+        if (groupHashes) {
+          const hashLocation = curUrl.indexOf("#");
+          if (hashLocation >= 0) {
+            curUrl = curUrl.substr(0, hashLocation);
+          }
+        }
         if (alreadyOpen.indexOf(curUrl) !== -1) {
           chrome.tabs.remove(curTab.id!);
-        } else {
+        }
+        // else if (groupHashes) {
+        // }
+        else {
           alreadyOpen.push(curUrl);
         }
       }
@@ -129,7 +138,7 @@ window.addEventListener("load", () => {
   const btnCleanup2 = document.getElementById("btnCleanup2")!;
   btnCleanup2.addEventListener("click", async () => {
     console.log("btnCleanup2 was clicked");
-    await closeDuplicates();
+    await closeDuplicates(true);
     await sortTabsByUrl2();
   });
 
