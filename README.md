@@ -42,6 +42,6 @@ Then, in the Chrome extensions page, click `Load unpacked`, and find the `extens
   - [ ] Split TS files, compile into one
   - [ ] Universal `watch` command(?)
 - [ ] Add decent styling
-- [ ] Ignore sub-domains when sorting (i.e. `www.website.com` & `dev.website.com`)
+- [x] Ignore sub-domains when sorting (i.e. `www.website.com` & `dev.website.com`)
 - [ ] Create real icons
 - [ ] Sort by category / common words?
