@@ -136,6 +136,8 @@ window.addEventListener("load", () => {
   });
 
   const btnCleanup2 = document.getElementById("btnCleanup2")!;
+  // chrome://extensions/shortcuts
+  btnCleanup2.focus();
   btnCleanup2.addEventListener("click", async () => {
     console.log("btnCleanup2 was clicked");
     await closeDuplicates();
