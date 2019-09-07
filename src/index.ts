@@ -138,8 +138,9 @@ window.addEventListener("load", () => {
   const btnCleanup2 = document.getElementById("btnCleanup2")!;
   btnCleanup2.addEventListener("click", async () => {
     console.log("btnCleanup2 was clicked");
-    await closeDuplicates(true);
+    await closeDuplicates();
     await sortTabsByUrl2();
+    await closeDuplicates(true); // I'm lazy
   });
 
   const btnCloseWebsite = document.getElementById("btnCloseWebsite")!;
