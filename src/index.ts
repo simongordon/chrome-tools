@@ -142,7 +142,7 @@ window.addEventListener("load", () => {
     console.log("btnCleanup2 was clicked");
     await closeDuplicates();
     await sortTabsByUrl2();
-    await closeDuplicates(true); // I'm lazy
+    // await closeDuplicates(true); // I'm lazy
   });
 
   const btnCloseWebsite = document.getElementById("btnCloseWebsite")!;
