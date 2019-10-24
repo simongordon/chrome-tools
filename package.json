@@ -4,11 +4,11 @@
   "description": "Remove duplicate chrome tabs",
   "main": "index.js",
   "scripts": {
-    "build-ts": "tsc",
+    "build-ts": "tsc-bundle tsconfig.json",
     "build-pug": "pug src --out extension/target",
     "build-css": "sass src/index.scss extension/target/index.css",
     "build": "npm run build-ts && npm run build-pug && npm run build-css",
-    "watch-ts": "tsc -w",
+    "watch-ts": "tsc-bundle tsconfig.json --watch",
     "watch-pug": "pug src --out extension/target -w",
     "watch-css": "sass src/index.scss extension/target/index.css --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,5 +18,8 @@
     "pug-cli": "^1.0.0-alpha6",
     "sass": "^1.23.1",
     "typescript": "^3.6.4"
+  },
+  "dependencies": {
+    "typescript-bundle": "^1.0.16"
   }
 }
