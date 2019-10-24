@@ -5,16 +5,17 @@ html
         link(rel="stylesheet", href="index.css")
     body
         h1 Chrome Tools
+        p
+            select#slctSort
+                option(value='') Do not sort
+                option(value='title') Sort by title
+                option(value='url') Sort by url
+                option(selected,value='url2') Sort by url (advanced)
+        p
+            input#closeDuplicates(type='checkbox', checked)
+            label(for='closeDuplicates') Close duplicate tabs
         div.buttonSection
-            button#btnClick Close duplicate tabs
-        div.buttonSection
-            button#btnSortURL Sort by URL
-            button#btnSortURL2 Sort by URL2
-        div.buttonSection
-            button#btnSortTitle Sort by Title
+            button#btnCleanup Cleanup
         div.buttonSection
             button#btnCloseWebsite Close all from website
             button#btnCloseWebsite2 Close all from website except this
-        div.buttonSection
-            button#btnCleanup Cleanup
-            button#btnCleanup2 Cleanup2

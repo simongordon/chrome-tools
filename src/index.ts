@@ -105,44 +105,32 @@ const sortTabsByUrl2 = () =>
 window.addEventListener("load", () => {
   console.log("Extension loaded");
 
-  const btnClick = document.getElementById("btnClick")!;
-  btnClick.addEventListener("click", () => {
-    console.log("btnClick was clicked");
-    closeDuplicates();
-  });
-
-  const btnSortURL = document.getElementById("btnSortURL")!;
-  btnSortURL.addEventListener("click", () => {
-    console.log("btnSortURL was clicked");
-    sortTabsByUrl();
-  });
-  const btnSortURL2 = document.getElementById("btnSortURL2")!;
-  btnSortURL2.addEventListener("click", () => {
-    console.log("btnSortURL2 was clicked");
-    sortTabsByUrl2();
-  });
-
-  const btnSortTitle = document.getElementById("btnSortTitle")!;
-  btnSortTitle.addEventListener("click", () => {
-    console.log("btnSortTitle was clicked");
-    sortTabsByTitle();
-  });
-
   const btnCleanup = document.getElementById("btnCleanup")!;
+  // chrome://extensions/shortcuts
+  btnCleanup.focus();
   btnCleanup.addEventListener("click", async () => {
     console.log("btnCleanup was clicked");
-    await closeDuplicates();
-    await sortTabsByUrl();
-  });
-
-  const btnCleanup2 = document.getElementById("btnCleanup2")!;
-  // chrome://extensions/shortcuts
-  btnCleanup2.focus();
-  btnCleanup2.addEventListener("click", async () => {
-    console.log("btnCleanup2 was clicked");
-    await closeDuplicates();
-    await sortTabsByUrl2();
-    // await closeDuplicates(true); // I'm lazy
+    const inpCloseDuplicates = document.getElementById(
+      "closeDuplicates"
+    )! as HTMLInputElement;
+    if (inpCloseDuplicates.checked) {
+      await closeDuplicates();
+    }
+    const slctSort = document.getElementById("slctSort")! as HTMLSelectElement;
+    switch (slctSort.value) {
+      case "title": {
+        await sortTabsByTitle();
+        break;
+      }
+      case "url": {
+        await sortTabsByUrl();
+        break;
+      }
+      case "url2": {
+        await sortTabsByUrl2();
+        break;
+      }
+    }
   });
 
   const btnCloseWebsite = document.getElementById("btnCloseWebsite")!;
