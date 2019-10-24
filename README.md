@@ -14,21 +14,21 @@ _Not yet published to Chrome extension store_
 
 ```
 git clone https://github.com/simongordon/chrome-tools.git
-yarn
+npm i
 ```
 
 ## To Run
 
 ```
-yarn build
+npm run build
 ```
 
 or, in separate consoles:
 
 ```
-yarn watch-ts
-yarn watch-pug
-yarn watch-css
+npm run watch-ts
+npm run watch-pug
+npm run watch-css
 ```
 
 Then, in the Chrome extensions page, click `Load unpacked`, and find the `extension` directory under this repo.
@@ -43,5 +43,5 @@ Then, in the Chrome extensions page, click `Load unpacked`, and find the `extens
   - [ ] Universal `watch` command(?)
 - [ ] Add decent styling
 - [x] Ignore sub-domains when sorting (i.e. `www.website.com` & `dev.website.com`)
-- [ ] Create real icons
+- [x] Create real icons
 - [ ] Sort by category / common words?
